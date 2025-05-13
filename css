@@ -1,0 +1,427 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #F3F4F6;
+}
+
+/* Category Card Styles */
+.category-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    z-index: 1;
+}
+
+.category-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.category-card:hover .category-icon {
+    transform: scale(1.2);
+}
+
+.category-card:hover .category-card-overlay {
+    opacity: 1;
+}
+
+.category-card:hover .category-tools {
+    max-height: 500px;
+    opacity: 1;
+}
+
+.category-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(123, 58, 237, 0.1), rgba(29, 37, 44, 0.8));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+}
+
+.category-icon {
+    transition: transform 0.4s ease;
+}
+
+.category-tools {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+/* Tool Card Styles */
+.tool-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.tool-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 0;
+    background-color: #8B5CF6;
+    transition: height 0.3s ease;
+}
+
+.tool-card:hover::before {
+    height: 100%;
+}
+
+.tool-card:hover .tool-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.tool-icon {
+    transition: transform 0.3s ease;
+}
+
+.category-btn.active {
+    background-color: #8B5CF6;
+}
+
+.category-section {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.tool-content {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.tool-content.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hidden {
+    display: none;
+}
+
+/* Tool sections styling */
+.tool-section {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+/* Pulse Animation for Upload Areas */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+    }
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+/* Animation for tool result items */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.5s ease forwards;
+}
+document.addEventListener('DOMContentLoaded', function() {
+    // Tool data by category
+    const toolsData = {
+        basic: [
+            { id: 'merge-pdf', name: 'Merge PDF', icon: 'fas fa-object-group', description: 'Combine multiple PDFs into a single document' },
+            { id: 'split-pdf', name: 'Split PDF', icon: 'fas fa-cut', description: 'Divide PDF into separate pages or page ranges' },
+            { id: 'compress-pdf', name: 'Compress PDF', icon: 'fas fa-compress-arrows-alt', description: 'Reduce file size while preserving quality' },
+            { id: 'remove-pages', name: 'Remove Pages', icon: 'fas fa-trash-alt', description: 'Delete specific pages from your PDF document' },
+            { id: 'rotate-pdf', name: 'Rotate PDF', icon: 'fas fa-sync', description: 'Change orientation of pages in your document' },
+            { id: 'add-page-numbers', name: 'Add Page Numbers', icon: 'fas fa-list-ol', description: 'Insert automatic page numbering to your PDF' },
+            { id: 'add-watermark', name: 'Add Watermark', icon: 'fas fa-tint', description: 'Insert text or image watermarks to protect documents' },
+            { id: 'rearrange-pages', name: 'Rearrange Pages', icon: 'fas fa-sort', description: 'Change the order of pages in your PDF' },
+            { id: 'pdf-reader', name: 'PDF Reader', icon: 'fas fa-book-reader', description: 'View and read PDF documents online' }
+        ],
+        convert: [
+            { id: 'pdf-to-word', name: 'PDF to Word', icon: 'fas fa-file-word', description: 'Convert PDF files to editable Word documents' },
+            { id: 'pdf-to-jpg', name: 'PDF to JPG', icon: 'fas fa-file-image', description: 'Convert PDF pages to JPG images' },
+            { id: 'word-to-pdf', name: 'Word to PDF', icon: 'fas fa-file-pdf', description: 'Convert Word documents to PDF format' },
+            { id: 'jpg-to-pdf', name: 'JPG to PDF', icon: 'fas fa-images', description: 'Convert images to PDF documents' },
+            { id: 'excel-to-pdf', name: 'Excel to PDF', icon: 'fas fa-file-excel', description: 'Convert Excel spreadsheets to PDF format' },
+            { id: 'pdf-to-excel', name: 'PDF to Excel', icon: 'fas fa-table', description: 'Extract tables from PDF to Excel spreadsheets' },
+            { id: 'pdf-to-text', name: 'PDF to Text', icon: 'fas fa-file-alt', description: 'Extract text content from PDF files' },
+            { id: 'ppt-to-pdf', name: 'PowerPoint to PDF', icon: 'fas fa-file-powerpoint', description: 'Convert presentations to PDF format' },
+            { id: 'html-to-pdf', name: 'HTML to PDF', icon: 'fas fa-code', description: 'Convert web pages to PDF documents' }
+        ],
+        advanced: [
+            { id: 'ocr-pdf', name: 'OCR PDF', icon: 'fas fa-file-search', description: 'Make scanned PDFs searchable with OCR' },
+            { id: 'encrypt-pdf', name: 'PDF Encryption', icon: 'fas fa-lock', description: 'Password protect and encrypt your PDF files' },
+            { id: 'decrypt-pdf', name: 'Remove Encryption', icon: 'fas fa-unlock', description: 'Remove password protection from PDF files' },
+            { id: 'edit-pdf', name: 'PDF Editor', icon: 'fas fa-edit', description: 'Edit text and images in PDF documents' },
+            { id: 'pdf-form', name: 'PDF Form Creator', icon: 'fas fa-file-signature', description: 'Create fillable PDF forms' },
+            { id: 'add-signature', name: 'Add Signature', icon: 'fas fa-signature', description: 'Add digital signatures to PDF documents' },
+            { id: 'pdf-to-pdf-a', name: 'PDF to PDF/A', icon: 'fas fa-archive', description: 'Convert PDF to PDF/A for long-term archiving' },
+            { id: 'repair-pdf', name: 'Repair PDF', icon: 'fas fa-wrench', description: 'Fix corrupted PDF files' },
+            { id: 'pdf-metadata', name: 'Edit Metadata', icon: 'fas fa-tags', description: 'View and edit PDF document properties' }
+        ],
+        ai: [
+            { id: 'ai-summarize', name: 'AI Summarize', icon: 'fas fa-robot', description: 'Generate summaries of PDF documents using AI' },
+            { id: 'ai-translate', name: 'AI Translate', icon: 'fas fa-language', description: 'Translate PDF documents to multiple languages' },
+            { id: 'ai-chatbot', name: 'AI ChatBot', icon: 'fas fa-comments', description: 'Chat with your PDF documents using AI' },
+            { id: 'ai-extract', name: 'AI Data Extraction', icon: 'fas fa-database', description: 'Extract specific data from PDFs using AI' },
+            { id: 'ai-redaction', name: 'AI Redaction', icon: 'fas fa-user-secret', description: 'Automatically redact sensitive information' },
+            { id: 'ai-formatting', name: 'AI Formatting', icon: 'fas fa-paragraph', description: 'Improve PDF layout and formatting with AI' },
+            { id: 'ai-keyword', name: 'AI Keyword Analysis', icon: 'fas fa-key', description: 'Extract and analyze keywords from PDFs' },
+            { id: 'ai-sentiment', name: 'AI Sentiment Analysis', icon: 'fas fa-smile', description: 'Analyze sentiment and tone in PDF documents' },
+            { id: 'ai-comparison', name: 'AI Document Comparison', icon: 'fas fa-not-equal', description: 'Compare PDFs and highlight differences with AI' }
+        ]
+    };
+
+    // Create tool cards for each category
+    const categoryContainers = {
+        basic: document.querySelector('#basic-tools .grid'),
+        convert: document.querySelector('#convert-tools .grid'),
+        advanced: document.querySelector('#advanced-tools .grid'),
+        ai: document.querySelector('#ai-tools .grid')
+    };
+
+    // Generate tool cards for each category
+    Object.keys(toolsData).forEach(category => {
+        const container = categoryContainers[category];
+        if (container) {
+            toolsData[category].forEach(tool => {
+                const card = document.createElement('div');
+                card.className = 'tool-card bg-white rounded-lg shadow-md overflow-hidden border border-gray-200';
+                card.setAttribute('data-category', category);
+                card.setAttribute('data-tool', tool.id);
+                
+                card.innerHTML = `
+                    <div class="p-5">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-primary-light/20 w-12 h-12 rounded-full flex items-center justify-center mr-3">
+                                <i class="${tool.icon} text-primary-dark text-xl"></i>
+                            </div>
+                            <h4 class="font-medium">${tool.name}</h4>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">${tool.description}</p>
+                        <button class="use-tool-btn w-full bg-primary hover:bg-primary-dark text-white py-2 rounded-md transition">
+                            Use Tool
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+    });
+
+    // Category filter functionality
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const categorySections = document.querySelectorAll('.category-section');
+    
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Update active button
+            categoryButtons.forEach(btn => {
+                btn.classList.remove('bg-primary');
+                btn.classList.add('bg-secondary');
+            });
+            button.classList.remove('bg-secondary');
+            button.classList.add('bg-primary');
+            
+            const selectedCategory = button.getAttribute('data-category');
+            
+            if (selectedCategory === 'all') {
+                // Show all categories
+                categorySections.forEach(section => {
+                    section.style.display = 'block';
+                });
+            } else {
+                // Show only selected category
+                categorySections.forEach(section => {
+                    if (section.id === `${selectedCategory}-tools`) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            }
+        });
+    });
+
+    // Tool functionality
+    const toolCards = document.querySelectorAll('.tool-card');
+    const toolInterfaces = document.querySelectorAll('.tool-interface');
+    const backButtons = document.querySelectorAll('.back-to-tools');
+    
+    // Add click event to tool cards
+    toolCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const toolId = card.getAttribute('data-tool');
+            
+            // Show the specific tool interface
+            if (toolId === 'pdf-to-jpg') {
+                showToolInterface('pdf-to-jpg-interface');
+                initPdfToJpgTool();
+            } else if (toolId === 'word-to-pdf') {
+                showToolInterface('word-to-pdf-interface');
+                initWordToPdfTool();
+            } else {
+                // For other tools, show a message
+                alert(`The ${toolId} tool will be available soon!`);
+            }
+        });
+    });
+    
+    // Back buttons functionality
+    backButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Hide all tool interfaces
+            toolInterfaces.forEach(interface => {
+                interface.classList.add('hidden');
+            });
+            
+            // Scroll back to tools section
+            document.getElementById('tools').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+    
+    function showToolInterface(interfaceId) {
+        // Hide all interfaces
+        toolInterfaces.forEach(interface => {
+            interface.classList.add('hidden');
+        });
+        
+        // Show the selected interface
+        const selectedInterface = document.getElementById(interfaceId);
+        if (selectedInterface) {
+            selectedInterface.classList.remove('hidden');
+            selectedInterface.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+    
+    // PDF to JPG Tool Functionality
+    function initPdfToJpgTool() {
+        const dropArea = document.getElementById('pdf-drop-area');
+        const fileInput = document.getElementById('pdf-file');
+        const convertButton = document.getElementById('convert-pdf-btn');
+        const resultSection = document.getElementById('pdf-result');
+        const resultImages = document.getElementById('pdf-result-images');
+        
+        // Reset the interface
+        dropArea.innerHTML = `
+            <i class="fas fa-cloud-upload-alt text-5xl text-primary mb-4"></i>
+            <p class="mb-2">Drag & drop your PDF file here or</p>
+            <label for="pdf-file" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark cursor-pointer">
+                Browse Files
+            </label>
+            <input type="file" id="pdf-file" class="hidden" accept=".pdf">
+        `;
+        
+        // Re-select the input
+        const newFileInput = document.getElementById('pdf-file');
+        
+        // Hide result section
+        resultSection.classList.add('hidden');
+        convertButton.disabled = true;
+        
+        // File selection handling
+        newFileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                const file = this.files[0];
+                
+                if (file.type === 'application/pdf') {
+                    // Show file info
+                    dropArea.innerHTML = `
+                        <i class="fas fa-file-pdf text-5xl text-primary mb-4"></i>
+                        <p class="font-medium">${file.name}</p>
+                        <p class="text-sm text-gray-500">${formatFileSize(file.size)}</p>
+                        <button id="remove-file" class="mt-4 text-red-500 text-sm">
+                            <i class="fas fa-times mr-1"></i> Remove
+                        </button>
+                    `;
+                    
+                    // Enable convert button
+                    convertButton.disabled = false;
+                    
+                    // Add remove file functionality
+                    document.getElementById('remove-file').addEventListener('click', () => {
+                        initPdfToJpgTool(); // Reset the tool
+                    });
+                    
+                    // Convert button functionality
+                    convertButton.addEventListener('click', () => {
+                        // Show loading state
+                        convertButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Converting...';
+                        convertButton.disabled = true;
+                        
+                        // Simulate conversion (2 second delay)
+                        setTimeout(() => {
+                            simulatePdfConversion(file);
+                        }, 2000);
+                    });
+                } else {
+                    alert('Please select a valid PDF file');
+                    initPdfToJpgTool(); // Reset the tool
+                }
+            }
+        });
+        
+        // File drag and drop functionality
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, () => {
+                dropArea.classList.add('bg-primary-light/10');
+                dropArea.classList.add('border-primary');
+            });
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, () => {
+                dropArea.classList.remove('bg-primary-light/10');
+                dropArea.classList.remove('border-primary');
+            });
+        });
+        
+        dropArea.addEventListener('drop', (e) => {
+            const file = e.dataTransfer.files[0];
+            
+            if (file && file.type === 'application/pdf') {
+                // Create a new file input to programmatically set the file
+                const dataTransfer =

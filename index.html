@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Tools Pro</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#A78BFA',
+                            DEFAULT: '#8B5CF6',
+                            dark: '#7C3AED',
+                        },
+                        secondary: {
+                            light: '#4B5563',
+                            DEFAULT: '#2D3748',
+                            dark: '#1A202C',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .tool-card {
+            transition: all 0.3s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-secondary-dark to-primary-dark text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">PDF Tools Pro</h1>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#" class="hover:text-primary-light">Home</a></li>
+                    <li><a href="#" class="hover:text-primary-light">Tools</a></li>
+                    <li><a href="#" class="hover:text-primary-light">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-secondary to-secondary-dark text-white py-16 px-4">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold mb-4">All-in-One PDF Solution</h1>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Access 36+ professional PDF tools to modify, convert, and enhance your documents with our powerful platform.</p>
+            <a href="#tools" class="bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-8 rounded-full transition duration-300">
+                Explore Tools
+            </a>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" class="container mx-auto py-12 px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Our PDF Tools</h2>
+        
+        <!-- Category Filters -->
+        <div class="flex flex-wrap justify-center gap-3 mb-12">
+            <button class="category-btn bg-primary text-white py-2 px-6 rounded-full active" data-category="all">All Tools</button>
+            <button class="category-btn bg-secondary text-white py-2 px-6 rounded-full" data-category="basic">Basic PDF Tools</button>
+            <button class="category-btn bg-secondary text-white py-2 px-6 rounded-full" data-category="convert">Conversion Tools</button>
+            <button class="category-btn bg-secondary text-white py-2 px-6 rounded-full" data-category="advanced">Advanced Tools</button>
+            <button class="category-btn bg-secondary text-white py-2 px-6 rounded-full" data-category="ai">AI Features</button>
+        </div>
+
+        <!-- Category Containers -->
+        <div class="grid grid-cols-1 gap-12">
+            <!-- Basic Tools -->
+            <div class="category-section" id="basic-tools">
+                <div class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white p-6 rounded-t-lg">
+                    <h3 class="text-2xl font-bold mb-2">Basic PDF Tools</h3>
+                    <p>Essential tools for managing your PDF documents</p>
+                </div>
+                <div class="bg-white p-6 rounded-b-lg shadow-md">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Tool Cards will be inserted here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conversion Tools -->
+            <div class="category-section" id="convert-tools">
+                <div class="bg-gradient-to-r from-indigo-500 to-blue-600 text-white p-6 rounded-t-lg">
+                    <h3 class="text-2xl font-bold mb-2">Conversion Tools</h3>
+                    <p>Convert PDFs to and from various file formats</p>
+                </div>
+                <div class="bg-white p-6 rounded-b-lg shadow-md">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Tool Cards will be inserted here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Tools -->
+            <div class="category-section" id="advanced-tools">
+                <div class="bg-gradient-to-r from-blue-500 to-teal-500 text-white p-6 rounded-t-lg">
+                    <h3 class="text-2xl font-bold mb-2">Advanced Tools</h3>
+                    <p>Professional tools for advanced PDF operations</p>
+                </div>
+                <div class="bg-white p-6 rounded-b-lg shadow-md">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Tool Cards will be inserted here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Features -->
+            <div class="category-section" id="ai-tools">
+                <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6 rounded-t-lg">
+                    <h3 class="text-2xl font-bold mb-2">AI Features</h3>
+                    <p>Intelligent tools powered by artificial intelligence</p>
+                </div>
+                <div class="bg-white p-6 rounded-b-lg shadow-md">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Tool Cards will be inserted here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Interfaces -->
+    <section id="tool-interfaces" class="container mx-auto py-8 px-4">
+        <!-- PDF to JPG Tool Interface -->
+        <div id="pdf-to-jpg-interface" class="tool-interface hidden bg-white p-6 rounded-lg shadow-md">
+            <h3 class="text-2xl font-bold mb-6 text-center">PDF to JPG Converter</h3>
+            <div class="max-w-3xl mx-auto">
+                <div id="pdf-drop-area" class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                    <i class="fas fa-cloud-upload-alt text-5xl text-primary mb-4"></i>
+                    <p class="mb-2">Drag & drop your PDF file here or</p>
+                    <label for="pdf-file" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark cursor-pointer">
+                        Browse Files
+                    </label>
+                    <input type="file" id="pdf-file" class="hidden" accept=".pdf">
+                </div>
+                
+                <div class="mt-6">
+                    <button id="convert-pdf-btn" class="w-full bg-primary text-white py-3 rounded-md hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        Convert to JPG
+                    </button>
+                </div>
+                
+                <div id="pdf-result" class="mt-8 hidden">
+                    <h4 class="font-bold text-lg mb-4">Conversion Results</h4>
+                    <div id="pdf-result-images" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <!-- Result images will be displayed here -->
+                    </div>
+                    <div class="mt-6 text-center">
+                        <button id="download-all-btn" class="bg-primary text-white py-2 px-6 rounded-md hover:bg-primary-dark">
+                            <i class="fas fa-download mr-2"></i> Download All
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <button class="back-to-tools bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to Tools
+                </button>
+            </div>
+        </div>
+        
+        <!-- Word to PDF Tool Interface -->
+        <div id="word-to-pdf-interface" class="tool-interface hidden bg-white p-6 rounded-lg shadow-md">
+            <h3 class="text-2xl font-bold mb-6 text-center">Word to PDF Converter</h3>
+            <div class="max-w-3xl mx-auto">
+                <div id="word-drop-area" class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                    <i class="fas fa-cloud-upload-alt text-5xl text-primary mb-4"></i>
+                    <p class="mb-2">Drag & drop your Word document here or</p>
+                    <label for="word-file" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark cursor-pointer">
+                        Browse Files
+                    </label>
+                    <input type="file" id="word-file" class="hidden" accept=".doc,.docx">
+                </div>
+                
+                <div class="mt-6">
+                    <button id="convert-word-btn" class="w-full bg-primary text-white py-3 rounded-md hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        Convert to PDF
+                    </button>
+                </div>
+                
+                <div id="word-result" class="mt-8 hidden">
+                    <h4 class="font-bold text-lg mb-4">Conversion Complete</h4>
+                    <div class="bg-gray-50 p-4 rounded-md flex items-center justify-between">
+                        <div class="flex items-center">
+                            <i class="fas fa-file-pdf text-4xl text-primary mr-4"></i>
+                            <div>
+                                <p id="result-filename" class="font-medium">document.pdf</p>
+                                <p id="result-filesize" class="text-sm text-gray-500">256 KB</p>
+                            </div>
+                        </div>
+                        <button id="download-pdf-btn" class="bg-primary text-white py-2 px-4 rounded-md hover:bg-primary-dark">
+                            <i class="fas fa-download mr-2"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <button class="back-to-tools bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to Tools
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary-dark text-white py-8 px-4 mt-12">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">PDF Tools Pro</h3>
+                    <p>Your complete PDF solution with 36+ powerful tools for all your document needs.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-3">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-primary-light">Home</a></li>
+                        <li><a href="#" class="hover:text-primary-light">Tools</a></li>
+                        <li><a href="#" class="hover:text-primary-light">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-3">Popular Tools</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-primary-light">Merge PDF</a></li>
+                        <li><a href="#" class="hover:text-primary-light">PDF to Word</a></li>
+                        <li><a href="#" class="hover:text-primary-light">Compress PDF</a></li>
+                        <li><a href="#" class="hover:text-primary-light">PDF to JPG</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 flex justify-between items-center">
+                <p>&copy; 2025 PDF Tools Pro. All rights reserved.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="hover:text-primary-light"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-primary-light"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-primary-light"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-primary-light"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
